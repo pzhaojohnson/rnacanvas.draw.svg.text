@@ -47,3 +47,35 @@ centerPoint.y; // 147
 centerPoint.x = 350;
 centerPoint.y = 500;
 ```
+
+### Listening for move events
+
+Instances of the `CenterPoint` class can be listened to
+for when the center point of the target SVG text element moves.
+
+Lots of things can cause the center point of an SVG text element to move
+(e.g., changes in `x` and `y` attributes, text content, font size, child `tspan` elements).
+
+Bound listeners might sometimes get called
+even when the center point of the target SVG text element
+did not actually move.
+
+```javascript
+text; // the target SVG text element
+
+var centerPoint = new CenterPoint(text);
+
+var listener = () => {};
+centerPoint.addEventListener('move', listener);
+
+text.setAttribute('x', '1012');
+listener; // called once
+
+text.textContent += 'asdf';
+listener; // called a second time
+
+centerPoint.removeEventListener('move', listener);
+
+centerPoint.x -= 500;
+listener; // not called a third time
+```
