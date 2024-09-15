@@ -42,4 +42,8 @@ var centerPoint = new CenterPoint(text);
 
 centerPoint.x; // 104.33333349227905
 centerPoint.y; // 147
+
+// can be set
+centerPoint.x = 350;
+centerPoint.y = 500;
 ```
