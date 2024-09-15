@@ -26,15 +26,15 @@ for center point calculations to be performed correctly
 ```javascript
 var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
+text.textContent = 'A';
 text.setAttribute('font-size', '12');
 text.setAttribute('x', '100');
 text.setAttribute('y', '150');
-text.textContent = 'A';
 
 var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 svg.append(text);
 
-// the target text element must be present within the document body
+// the target SVG text element must be present within the document body
 // for center point calculations to be performed correctly
 document.body.append(svg);
 
