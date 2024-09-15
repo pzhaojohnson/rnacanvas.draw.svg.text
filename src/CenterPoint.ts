@@ -4,8 +4,19 @@
 export class CenterPoint {
   #targetSVGTextElement: SVGTextElement;
 
+  #eventListeners: EventListeners = {
+    'move': [],
+  };
+
+  #movementObserver: MutationObserver;
+
   constructor(targetSVGTextElement: SVGTextElement) {
     this.#targetSVGTextElement = targetSVGTextElement;
+
+    this.#movementObserver = new MutationObserver(() => this.#callEventListeners('move'));
+
+    // lots of things could make the center point move
+    this.#movementObserver.observe(targetSVGTextElement, { attributes: true, childList: true, characterData: true, subtree: true });
   }
 
   get x(): number {
@@ -49,4 +60,22 @@ export class CenterPoint {
 
     this.#targetSVGTextElement.setAttribute('y', attributeValues.join(', '));
   }
+
+  addEventListener(name: 'move', listener: EventListener): void {
+    this.#eventListeners[name].push(listener);
+  }
+
+  removeEventListener(name: 'move', listener: EventListener): void {
+    this.#eventListeners[name] = this.#eventListeners[name].filter(li => li !== listener);
+  }
+
+  #callEventListeners(name: 'move'): void {
+    this.#eventListeners[name].forEach(listener => listener());
+  }
 }
+
+type EventListener = () => void;
+
+type EventListeners = {
+  'move': EventListener[];
+};

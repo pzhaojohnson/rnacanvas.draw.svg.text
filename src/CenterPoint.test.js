@@ -6,7 +6,9 @@ import { CenterPoint } from './CenterPoint';
 
 describe('`CenterPoint` class', () => {
   test('`x` getter', () => {
-    let text = { getBBox: () => ({ x: 57, width: 82 }) };
+    let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    text.getBBox = () => ({ x: 57, width: 82 });
 
     let centerPoint = new CenterPoint(text);
 
@@ -62,7 +64,9 @@ describe('`CenterPoint` class', () => {
   });
 
   test('`y` getter', () => {
-    let text = { getBBox: () => ({ y: 103, height: 54 }) };
+    let text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    text.getBBox = () => ({ y: 103, height: 54 });
 
     let centerPoint = new CenterPoint(text);
 
